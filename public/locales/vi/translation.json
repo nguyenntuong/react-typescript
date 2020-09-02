@@ -1,0 +1,6 @@
+{
+    "error": {
+        "404": "Không thể tìm thấy.",
+        "401": "Không có quyền hạn."
+    }
+}

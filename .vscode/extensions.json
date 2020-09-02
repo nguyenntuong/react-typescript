@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "firefox-devtools.vscode-firefox-debug",
+        "msjsdiag.debugger-for-chrome",
+        "msjsdiag.debugger-for-edge",
+        "stylelint.vscode-stylelint",
+        "visualstudioexptteam.vscodeintellicode",
+        "sonarsource.sonarlint-vscode",
+        "esbenp.prettier-vscode"
+    ]
+}

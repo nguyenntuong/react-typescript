@@ -1,0 +1,148 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "terminateAll"
+        },
+        {
+            "id": "componentType",
+            "type": "pickString",
+            "options": ["component", "container"],
+            "default": "component",
+            "description": "What type of component do you want to create?"
+        },
+        {
+            "id": "componentName",
+            "type": "promptString",
+            "default": "MyNewComponent",
+            "description": "Name your component."
+        }
+    ],
+    "tasks": [
+        {
+            "label": "Generate Component",
+            "type": "shell",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "command": ["node"],
+            "args": ["./tools/index.js", "g", "${input:componentType}", "${input:componentName}"],
+            "detail": "Create a template for container or component.",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${cwd}"
+            }
+        },
+        {
+            "label": "Terminate All Tasks",
+            "command": "echo ${input:terminate}",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "problemMatcher": [],
+            "label": "npm: start",
+            "detail": "react-scripts start"
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "label": "npm: build",
+            "detail": "npm run prebuild && react-scripts build"
+        },
+        {
+            "type": "npm",
+            "script": "analyze",
+            "problemMatcher": [],
+            "label": "npm: analyze",
+            "detail": "source-map-explorer 'build/static/js/*.js' --html 'analyze/index.html'"
+        },
+        {
+            "type": "npm",
+            "script": "analyze:gzip",
+            "problemMatcher": [],
+            "label": "npm: analyze:gzip",
+            "detail": "source-map-explorer 'build/static/js/*.js' --html 'analyze/index.html' --gzip"
+        },
+        {
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": [],
+            "label": "npm: lint",
+            "detail": "npm run lint:js && npm run lint:css"
+        },
+        {
+            "type": "npm",
+            "script": "lint:fix",
+            "problemMatcher": [],
+            "label": "npm: lint:fix",
+            "detail": "npm run lint:js:fix && npm run lint:css:fix"
+        },
+        {
+            "type": "npm",
+            "script": "start:prod",
+            "problemMatcher": [],
+            "label": "npm: start:prod",
+            "detail": "npm run build && npm run start:production"
+        },
+        {
+            "type": "npm",
+            "script": "start:prod:prof",
+            "problemMatcher": [],
+            "label": "npm: start:prod:prof",
+            "detail": "npm run build:prof && npm run start:production"
+        },
+        {
+            "type": "npm",
+            "script": "install",
+            "problemMatcher": [],
+            "label": "npm: install",
+            "detail": "install dependencies from package"
+        },
+        {
+            "type": "npm",
+            "script": "build:analyze",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: build:analyze",
+            "detail": "npm run build && npm run analyze"
+        },
+        {
+            "type": "npm",
+            "script": "test:watch",
+            "group": "build",
+            "problemMatcher": [],
+            "label": "npm: test:watch",
+            "detail": "react-scripts test --watchAll"
+        },
+        {
+            "type": "npm",
+            "script": "test:update",
+            "problemMatcher": [],
+            "label": "npm: test:update",
+            "detail": "react-scripts test --updateSnapshot"
+        },
+        {
+            "type": "npm",
+            "script": "prettify ${relativeFile}",
+            "problemMatcher": [],
+            "label": "npm: prettify",
+            "detail": "prettier --write"
+        }
+    ]
+}

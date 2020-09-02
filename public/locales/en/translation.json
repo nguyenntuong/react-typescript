@@ -1,0 +1,7 @@
+{
+    "error": {
+        "404": "Page not Found.",
+        "401": "Unauthorize.",
+        "402": "Only in english."
+    }
+}

@@ -1,0 +1,9 @@
+/dist
+# testing
+/coverage
+# production
+/build
+# analyze
+/analyze
+# dependencies
+/node_modules

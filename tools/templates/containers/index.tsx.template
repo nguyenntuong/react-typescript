@@ -1,0 +1,40 @@
+import React, { Fragment } from 'react';
+
+import { withReducerSaga } from 'utils/withReducerSaga';
+import { connectReducerToProps } from 'utils/connectReducerToProps';
+import { REDUCER_SAGA_IDENTIFY } from './constants';
+import { composeInferTypeMemo } from 'utils/composeInferType';
+
+import reducer from './reducer';
+import saga from './saga';
+
+import { selectId } from './selectors';
+import { __Component__Actions, MakeIAction } from './actions';
+
+import styles from './styles.module.scss';
+
+type I__Component__Props = {
+    id?: string;
+};
+function __Component__({}: I__Component__Props): React.FunctionComponentElement<I__Component__Props> {
+    return (
+        <Fragment>
+            <p className={styles['unique-class']}>__Component__</p>
+        </Fragment>
+    );
+}
+
+const connectReducerToLocalProps = connectReducerToProps<I__Component__Props, __Component__Actions>(
+    {
+        id: selectId(),
+    },
+    (dispatch) => ({
+        dispatch,
+        dispacthAction: (params: string) => {
+            dispatch(MakeIAction(params));
+        },
+    }),
+);
+const withReducerSagaLocal = withReducerSaga(REDUCER_SAGA_IDENTIFY, reducer, saga);
+
+export default composeInferTypeMemo(__Component__)(withReducerSagaLocal, connectReducerToLocalProps);

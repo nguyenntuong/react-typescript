@@ -1,0 +1,8 @@
+import { createReducerSagaIdentify } from 'utils/createReducerSagaIdentify';
+
+export const REDUCER_SAGA_IDENTIFY = createReducerSagaIdentify(module);
+
+enum __COMPONENT___REDUCER_KEY {
+    ACTION = '__COMPONENT__@@ACTION',
+}
+export { __COMPONENT___REDUCER_KEY };

@@ -1,0 +1,14 @@
+import React, { Fragment, FunctionComponentElement } from 'react';
+import { composeInferTypeMemo } from 'utils/composeInferType';
+import styles from './styles.module.scss';
+
+export interface I__Component__Props {}
+
+function __Component__({}: I__Component__Props): FunctionComponentElement<I__Component__Props> {
+    return (
+        <Fragment>
+            <p className={styles['unique-class']}>__Component__</p>
+        </Fragment>
+    );
+}
+export default composeInferTypeMemo(__Component__)();
