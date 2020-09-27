@@ -16,6 +16,7 @@ This project was inited and created base on [Visual Studio Code](https://code.vi
 
 -   [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode): `>= 1.17.0`
 -   [Visual Studio IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode): `>= 1.2.10`
+-   [Icons for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons): `>= 11.0.0`
 
 #### Extension for debugging
 
