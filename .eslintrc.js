@@ -93,7 +93,7 @@ module.exports = {
         '@typescript-eslint/no-parameter-properties': 'off',
         '@typescript-eslint/no-unused-expressions': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
-        '@typescript-eslint/no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': 'error',
         '@typescript-eslint/no-var-requires': 'error',
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-function-type': 'error',
@@ -111,6 +111,7 @@ module.exports = {
         ],
         '@typescript-eslint/type-annotation-spacing': 'off',
         '@typescript-eslint/unified-signatures': 'error',
+        '@typescript-eslint/no-unused-vars': 'error',
         'array-bracket-newline': 'off',
         'array-bracket-spacing': 'off',
         'array-callback-return': 'warn',
@@ -411,13 +412,7 @@ module.exports = {
         'no-unsafe-finally': 'error',
         'no-unused-expressions': 'off',
         'no-unused-labels': 'error',
-        'no-unused-vars': [
-            'error',
-            {
-                args: 'none',
-                ignoreRestSiblings: true,
-            },
-        ],
+        'no-unused-vars': 'error',
         'no-use-before-define': [
             'warn',
             {

@@ -4,7 +4,6 @@ import 'polyfills';
 import './i18n';
 // Init css
 import './post-index.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import './index.scss';
 
 /// Rest of code
@@ -18,10 +17,13 @@ import * as serviceWorker from './serviceWorker';
 import configureStore from './store';
 import { initialState } from 'state';
 import injectWindow from './services';
+
 // inject Service to global Window
 injectWindow();
+
 // Create redux store with history
 const store = configureStore(history, initialState);
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>

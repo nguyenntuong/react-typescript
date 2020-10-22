@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 type I__Component__Props = {
     id?: string;
 };
-function __Component__({}: I__Component__Props): React.FunctionComponentElement<I__Component__Props> {
+function __Component__(props: I__Component__Props): React.FunctionComponentElement<I__Component__Props> {
     return (
         <Fragment>
             <p className={styles['unique-class']}>__Component__</p>

@@ -1,0 +1,137 @@
+.system-error-notify {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    background-color: transparent;
+    &.show {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    &.hidden {
+        opacity: 0;
+        z-index: -1;
+    }
+    &__background {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        transition: 1s;
+        user-select: none;
+    }
+    &__container {
+        min-height: 150px;
+        min-width: 300px;
+        max-width: 350px;
+        display: flex;
+        background-color: white;
+        border-radius: 4px;
+        padding: 0 8px;
+        .error-image {
+            display: flex;
+            align-items: center;
+            img {
+                width: 100px;
+                height: 100px;
+                user-select: none;
+            }
+        }
+        .error-content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            &__tool-bar {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 2px solid black;
+                margin-bottom: 5px;
+                .title {
+                    flex-grow: 1;
+                    margin-bottom: 4px;
+                }
+                .tool-button-group {
+                    &__question {
+                        display: inline;
+                        position: relative;
+                        .question-tooltip {
+                            transition: 0.5s;
+                            position: absolute;
+                            opacity: 0;
+                            z-index: -1;
+                            min-width: 200px;
+                            max-width: 250px;
+                            transform: translateX(-50%);
+                            background-color: rgba(0, 0, 0, 0.8);
+                            color: white;
+                            border-radius: 8px;
+                            padding: 5px 8px;
+                            text-align: center;
+                            margin-top: 5px;
+                            &::before {
+                                content: '';
+                                display: block;
+                                margin-left: 50%;
+                                transform: translateX(10%);
+                                width: 10px;
+                                height: 10px;
+                                margin-top: -20px;
+                                background-color: transparent;
+                                border-left: 8px solid transparent;
+                                border-right: 8px solid transparent;
+                                border-bottom: 8px solid rgba(0, 0, 0, 0.8);
+                                border-top: 8px solid transparent;
+                            }
+                        }
+                        &:hover {
+                            .question-tooltip {
+                                opacity: 1;
+                                z-index: 999;
+                            }
+                        }
+                        .question-icon {
+                            width: 20px;
+                            height: 20px;
+                            cursor: help;
+                        }
+                    }
+                    &__close {
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            &__message {
+                user-select: text;
+                .text {
+                    word-wrap: break-word;
+                }
+
+                flex-grow: 1;
+            }
+            &__footer {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                border-top: 2px solid black;
+                padding-top: 5px;
+                .btn-reload {
+                    border-radius: 4px;
+                    width: 80px;
+                    line-height: 18px;
+                    background-color: white;
+                    border: 1px solid black;
+                }
+            }
+        }
+    }
+}
