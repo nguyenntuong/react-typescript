@@ -31,5 +31,5 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az storage blob delete-batch -s \$web --connection-string 
+          az storage blob delete-batch -s \$web
           az storage blob upload-batch -s $GITHUB_WORKSPACE/build -d \$web
