@@ -28,4 +28,3 @@ jobs:
                   directory: ./coverage/jest/
                   flags: unittests
                   name: codecov
-                  verbose: true
