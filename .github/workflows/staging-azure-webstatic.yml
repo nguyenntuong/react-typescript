@@ -4,6 +4,7 @@ on:
 
 env:
   NODE_VERSION: '12.x'                # set this to the node version to use
+  AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.STAGING_AZURE_BLOB }}
 
 jobs:
   build-and-deploy:
@@ -30,4 +31,4 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az storage blob upload-batch -s $GITHUB_WORKSPACE/build -d \$web --connection-string ${{ secrets.STAGING_AZURE_BLOB }}
+          az storage blob upload-batch -s $GITHUB_WORKSPACE/build -d \$web
