@@ -13,11 +13,6 @@ jobs:
     - name: Checkout the repo
       uses: actions/checkout@v2
     
-    - name: Login to Azure
-      uses: Azure/login@v1
-      with:
-        creds: ${{ secrets.STAGING_AZURE_CREDENTIALS }}
-    
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
@@ -35,4 +30,4 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az storage blob upload-batch -s $GITHUB_WORKSPACE/build -d \$web --account-name ${{ secrets.STAGING_STORAGE_ACCOUNT_NAME }}
+          az storage blob upload-batch -s $GITHUB_WORKSPACE/build -d \$web --connection-string ${{ secrets.STAGING_AZURE_BLOB }}
