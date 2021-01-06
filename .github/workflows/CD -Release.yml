@@ -1,16 +1,15 @@
-name: CD-Staging
+name: CD-Release
 
 on:
-    push:
-        branches:
-            - develop
+    release:
+        types: [created]
 
 env:
     NODE_VERSION: '12.x' # set this to the node version to use
 
 jobs:
     build-and-deploy:
-        name: Build and Deploy Staging
+        name: Build and Deploy
         runs-on: ubuntu-latest
         steps:
             - name: Checkout the repo
@@ -23,7 +22,8 @@ jobs:
 
             - name: npm install, build
               run: |
-                  # Build the project, then deploy to Azure Web App.
+                  # Build the project, then
+                  # deploy to Azure Web App.
                   npm install
                   npm run build
 

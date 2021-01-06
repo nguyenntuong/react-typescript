@@ -1,5 +1,3 @@
-import { IBaseRequestModel } from './baseModel';
-
-export interface IBaseRequest<T extends IBaseRequestModel> {
+export interface IBaseRequest<T> {
     readonly requestData: T;
 }

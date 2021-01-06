@@ -1,6 +1,6 @@
 const OBJECT = {};
 export function jsonToFormData(
-    jsonForm: Record<string, any>,
+    jsonForm: Record<string, unknown>,
     parentKey?: string,
     formDataCache: FormData = new FormData(),
 ) {
@@ -11,13 +11,13 @@ export function jsonToFormData(
             if (parentKey) {
                 constructedKey = `${parentKey}.${key}`;
             }
-            const value = jsonForm[key] as { constructor: any };
+            const value = jsonForm[key] as { constructor: Function };
             if (value.constructor === OBJECT.constructor) {
                 jsonToFormData(value, constructedKey, formData);
             } else if (value instanceof Date) {
                 formData.append(constructedKey, value.toISOString());
-            } else {
-                formData.append(constructedKey, value as any);
+            } else if (value instanceof Blob || typeof value === 'string') {
+                formData.append(constructedKey, value);
             }
         }
     }

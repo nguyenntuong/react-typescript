@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable @typescript-eslint/unbound-method */
 import { applyMiddleware } from 'redux';
 import { configureStore, getDefaultMiddleware, isPlain } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
@@ -25,14 +22,14 @@ export default function configureAppStore(history: History, initialState: IGloba
         }
     }
     const sagaMiddleware = createSagaMiddleware(reduxSagaMonitorOptions);
-    const { run: runSaga } = sagaMiddleware;
     // sagaMiddleware: Make redux-sagas work
     const middlewares = [sagaMiddleware, routerMiddleware(history)];
     const enhancers = [
         applyMiddleware(...middlewares),
         createInjectorsEnhancer({
             createReducer,
-            runSaga,
+            // eslint-disable-next-line @typescript-eslint/unbound-method
+            runSaga: sagaMiddleware.run,
         }),
     ];
     const store = configureStore({
@@ -40,7 +37,7 @@ export default function configureAppStore(history: History, initialState: IGloba
         middleware: [
             ...getDefaultMiddleware({
                 serializableCheck: {
-                    isSerializable: (value: any) => {
+                    isSerializable: (value: unknown) => {
                         return isPlain(value) || isPlainCustom(value);
                     },
                 },

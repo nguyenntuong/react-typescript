@@ -1,6 +1,7 @@
-import React, { FunctionComponent, lazy, Suspense } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { lazy, Suspense } from 'react';
 
-export function lazyComponent<C extends FunctionComponent<any>>(
+export function lazyComponent<C extends React.ComponentType<any>>(
     importFunc: () => Promise<{
         default: C;
     }>,

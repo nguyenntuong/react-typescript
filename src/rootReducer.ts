@@ -1,8 +1,8 @@
-import { AnyAction, combineReducers } from '@reduxjs/toolkit';
+import { Action, combineReducers } from '@reduxjs/toolkit';
 import { connectRouter } from 'connected-react-router';
 import { history } from 'utils/history';
 export default function createReducer(injectedReducers = {}) {
-    const rootReducer = combineReducers<any, AnyAction | any>({
+    const rootReducer = combineReducers<unknown, Action>({
         ...injectedReducers,
         router: connectRouter(history),
     });

@@ -1,4 +1,4 @@
-export const isPlainCustom = (value: any): boolean => {
+export const isPlainCustom = (value: unknown): boolean => {
     if (value instanceof Date) {
         return true;
     }

@@ -1,16 +1,14 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { jsonToFormData } from 'helpers/dataTransforms';
+import { jsonToFormData } from 'helpers/converts';
 import { IBaseRequest } from 'models/requests';
-import { IBaseRequestModel } from 'models/requests/baseModel';
 import { IBaseRespone } from 'models/respones';
-import { IBaseResponeModel } from 'models/respones/baseModel';
-import { STORAGE_KEYS, DEF_OPTS } from './constants';
+import { STORAGE_KEYS, DEF_OPTS } from 'constants/services';
 import { getStorage } from './storage';
 
 /**
  * @returns Eject Middleware function
  */
-export function AxiosRegistryResponseMiddleware<BRP extends IBaseResponeModel = any>(middleware: {
+export function AxiosRegistryResponseMiddleware<BRP>(middleware: {
     onFulfilled?: (
         value: AxiosResponse<IBaseRespone<BRP>>,
     ) => AxiosResponse<IBaseRespone<BRP>> | Promise<AxiosResponse<IBaseRespone<BRP>>>;
@@ -35,23 +33,23 @@ export function AxiosRegistryRequestMiddleware(middleware: {
     };
 }
 
-export interface IRequestParams<BRQ extends IBaseRequestModel> extends AxiosRequestConfig {
+export interface IRequestParams<BRQ> extends AxiosRequestConfig {
     body?: IBaseRequest<BRQ>;
     isAuth?: boolean;
     isFormdata?: boolean;
 }
-export interface IBaseException<BRP extends IBaseResponeModel> extends AxiosError<IBaseRespone<BRP>> {}
+export interface IBaseException<BRP> extends AxiosError<IBaseRespone<BRP>> {}
 
 function setHeader(isAuth: boolean, customHeader: Record<string, string> = {}) {
     const userInfo = getStorage<{
         token: string;
     }>(STORAGE_KEYS.USER);
-    const TMP_OPTS = isAuth ? { Authorization: `Bearer ${userInfo?.token}` } : {};
+    const TMP_OPTS = isAuth && userInfo ? { Authorization: `Bearer ${userInfo.token}` } : {};
 
     return { ...DEF_OPTS, ...TMP_OPTS, ...customHeader };
 }
-export function SpawnRequest<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
-    method: 'GET' | 'POST' | 'PUT' | 'DEL',
+export function SpawnRequest<RQ, RP>(
+    method: 'GET' | 'POST' | 'PUT' | 'DEL' | string,
 ): (params: IRequestParams<RQ>) => Promise<AxiosResponse<IBaseRespone<RP>>> {
     switch (method) {
         case 'GET':
@@ -66,17 +64,14 @@ export function SpawnRequest<RQ extends IBaseRequestModel, RP extends IBaseRespo
             throw new Error(`This method ${method} not support!`);
     }
 }
-async function _GET<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
-    params: IRequestParams<RQ>,
-): Promise<AxiosResponse<IBaseRespone<RP>>> {
-    const { isAuth = false, url } = params;
-    const fullUrl = `${window.env.API_URL}+${url}`;
+async function _GET<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+    const { isAuth = false } = params;
+    params.baseURL = window.env.API_URL;
     try {
         const respone = await axios({
             ...params,
             method: 'GET',
             headers: setHeader(isAuth, params.headers),
-            url: fullUrl,
         });
         return respone;
     } catch (e) {
@@ -85,18 +80,15 @@ async function _GET<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
     }
 }
 
-async function _PUT<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
-    params: IRequestParams<RQ>,
-): Promise<AxiosResponse<IBaseRespone<RP>>> {
-    const { body = {}, isAuth = false, url, isFormdata = false } = params;
-    const fullUrl = `${window.env.API_URL}+${url}`;
+async function _PUT<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+    const { body = {}, isAuth = false, isFormdata = false } = params;
+    params.baseURL = window.env.API_URL;
     try {
         const respone = await axios({
             ...params,
             method: 'PUT',
             headers: setHeader(isAuth, params.headers),
             data: isFormdata ? jsonToFormData(body) : body,
-            url: fullUrl,
         });
         return respone;
     } catch (e) {
@@ -105,18 +97,15 @@ async function _PUT<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
     }
 }
 
-async function _POST<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
-    params: IRequestParams<RQ>,
-): Promise<AxiosResponse<IBaseRespone<RP>>> {
-    const { url, body = {}, isAuth = false, isFormdata = false } = params;
-    const fullUrl = `${window.env.API_URL}+${url}`;
+async function _POST<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+    const { body = {}, isAuth = false, isFormdata = false } = params;
+    params.baseURL = window.env.API_URL;
     try {
         const respone = await axios({
             ...params,
             method: 'POST',
             headers: setHeader(isAuth, params.headers),
             data: isFormdata ? jsonToFormData(body) : body,
-            url: fullUrl,
         });
         return respone;
     } catch (e) {
@@ -125,17 +114,14 @@ async function _POST<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>
     }
 }
 
-async function _DEL<RQ extends IBaseRequestModel, RP extends IBaseResponeModel>(
-    params: IRequestParams<RQ>,
-): Promise<AxiosResponse<IBaseRespone<RP>>> {
-    const { url, isAuth = false } = params;
-    const fullUrl = `${window.env.API_URL}+${url}`;
+async function _DEL<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+    const { isAuth = false } = params;
+    params.baseURL = window.env.API_URL;
     try {
         const respone = await axios({
             ...params,
             method: 'DELETE',
             headers: setHeader(isAuth, params.headers),
-            url: fullUrl,
         });
         return respone;
     } catch (e) {

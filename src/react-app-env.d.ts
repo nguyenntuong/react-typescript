@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /// <reference types="react-scripts" />
 /// <reference types="webpack-env" />
 /// <reference types="node" />
-/// <reference path="./services" />
-type ReturnUnpackPromise<F> = F extends (...args: any[]) => Promise<infer T> ? T : F;
+
 interface Window {
     readonly env: {
         readonly API_URL: string;

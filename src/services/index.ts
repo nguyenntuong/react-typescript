@@ -1,4 +1,4 @@
-import { setupJSONTransforms } from './JSON';
+import { setupJSONTransforms } from './json';
 import {
     getStorage,
     setStorage,
