@@ -6,7 +6,6 @@
         "msjsdiag.debugger-for-edge",
         "stylelint.vscode-stylelint",
         "visualstudioexptteam.vscodeintellicode",
-        "sonarsource.sonarlint-vscode",
         "esbenp.prettier-vscode",
         "vscode-icons-team.vscode-icons"
     ]
