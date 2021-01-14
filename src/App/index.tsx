@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { memo } from 'react';
+import Layout from './Layout';
+import Routing from './Routing';
 
-function App(): React.FunctionComponentElement<{}> {
-    return <div className="App"></div>;
+class App extends React.Component {
+    render() {
+        return (
+            <Layout>
+                <Routing />
+            </Layout>
+        );
+    }
 }
-
-export default App;
+export default memo(App);

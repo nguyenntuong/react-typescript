@@ -16,24 +16,24 @@ module.exports.g = function g(componentType, componentName) {
             component(componentName);
             break;
 
-        case 'container':
+        case 'feature':
             container(componentName);
             break;
 
         default:
             console.log(`
-            [component | container]
+            [component | feature]
             `);
             break;
     }
     console.log(`${componentType} with name ${componentName} was created successfull!`);
 };
 
-const componentsDirPath = 'src/components';
-const containerDirPath = 'src/containers';
+const componentsDirPath = 'src/component';
+const containerDirPath = 'src/feature';
 
-const templateComponentPath = 'tools/templates/components';
-const templateContainerPath = 'tools/templates/containers';
+const templateComponentPath = 'tools/templates/component';
+const templateContainerPath = 'tools/templates/feature';
 
 const templateExtension = '.template';
 

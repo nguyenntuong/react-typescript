@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { jsonToFormData } from 'helpers/converts';
 import { IBaseRequest } from 'models/requests';
-import { IBaseRespone } from 'models/respones';
+import { IBaseResponse } from 'models/responses';
 import { STORAGE_KEYS, DEF_OPTS } from 'constants/services';
 import { getStorage } from './storage';
 
@@ -10,9 +10,9 @@ import { getStorage } from './storage';
  */
 export function AxiosRegistryResponseMiddleware<BRP>(middleware: {
     onFulfilled?: (
-        value: AxiosResponse<IBaseRespone<BRP>>,
-    ) => AxiosResponse<IBaseRespone<BRP>> | Promise<AxiosResponse<IBaseRespone<BRP>>>;
-    onRejected?: (error: AxiosError<IBaseRespone<BRP>>) => AxiosError<IBaseRespone<BRP>>;
+        value: AxiosResponse<IBaseResponse<BRP>>,
+    ) => AxiosResponse<IBaseResponse<BRP>> | Promise<AxiosResponse<IBaseResponse<BRP>>>;
+    onRejected?: (error: AxiosError<IBaseResponse<BRP>>) => AxiosError<IBaseResponse<BRP>>;
 }): () => void {
     const interceptorsResponseId = axios.interceptors.response.use(middleware.onFulfilled, middleware.onRejected);
     return () => {
@@ -33,13 +33,32 @@ export function AxiosRegistryRequestMiddleware(middleware: {
     };
 }
 
+/**
+ * Wrap api call return without catch
+ */
+export interface AxiosReturn<RP> {
+    response?: AxiosResponse<IBaseResponse<RP>>;
+    error?: IBaseException<RP>;
+    isError?: boolean;
+}
+
+/**
+ * A interface for api call function
+ */
 export interface IRequestParams<BRQ> extends AxiosRequestConfig {
     body?: IBaseRequest<BRQ>;
     isAuth?: boolean;
     isFormdata?: boolean;
 }
-export interface IBaseException<BRP> extends AxiosError<IBaseRespone<BRP>> {}
 
+/**
+ * Wrap interface for api error
+ */
+export interface IBaseException<BRP> extends AxiosError<IBaseResponse<BRP>> {}
+
+/**
+ * setHeader internal used
+ */
 function setHeader(isAuth: boolean, customHeader: Record<string, string> = {}) {
     const userInfo = getStorage<{
         token: string;
@@ -48,9 +67,14 @@ function setHeader(isAuth: boolean, customHeader: Record<string, string> = {}) {
 
     return { ...DEF_OPTS, ...TMP_OPTS, ...customHeader };
 }
+
+/**
+ * Factory to spawn a api request
+ * @param method method type
+ */
 export function SpawnRequest<RQ, RP>(
     method: 'GET' | 'POST' | 'PUT' | 'DEL' | string,
-): (params: IRequestParams<RQ>) => Promise<AxiosResponse<IBaseRespone<RP>>> {
+): (params: IRequestParams<RQ>) => Promise<AxiosReturn<RP>> {
     switch (method) {
         case 'GET':
             return (params: IRequestParams<RQ>) => _GET<RQ, RP>(params);
@@ -64,7 +88,7 @@ export function SpawnRequest<RQ, RP>(
             throw new Error(`This method ${method} not support!`);
     }
 }
-async function _GET<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+async function _GET<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>> {
     const { isAuth = false } = params;
     params.baseURL = window.env.API_URL;
     try {
@@ -73,14 +97,21 @@ async function _GET<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<I
             method: 'GET',
             headers: setHeader(isAuth, params.headers),
         });
-        return respone;
+        return {
+            isError: false,
+            response: respone,
+            error: undefined,
+        };
     } catch (e) {
-        const cast = e as IBaseException<RP>;
-        throw cast;
+        return {
+            isError: true,
+            response: (e as IBaseException<RP>).response,
+            error: e as IBaseException<RP>,
+        };
     }
 }
 
-async function _PUT<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+async function _PUT<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>> {
     const { body = {}, isAuth = false, isFormdata = false } = params;
     params.baseURL = window.env.API_URL;
     try {
@@ -90,14 +121,21 @@ async function _PUT<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<I
             headers: setHeader(isAuth, params.headers),
             data: isFormdata ? jsonToFormData(body) : body,
         });
-        return respone;
+        return {
+            isError: false,
+            response: respone,
+            error: undefined,
+        };
     } catch (e) {
-        const cast = e as IBaseException<RP>;
-        throw cast;
+        return {
+            isError: true,
+            response: (e as IBaseException<RP>).response,
+            error: e as IBaseException<RP>,
+        };
     }
 }
 
-async function _POST<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+async function _POST<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>> {
     const { body = {}, isAuth = false, isFormdata = false } = params;
     params.baseURL = window.env.API_URL;
     try {
@@ -107,14 +145,21 @@ async function _POST<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<
             headers: setHeader(isAuth, params.headers),
             data: isFormdata ? jsonToFormData(body) : body,
         });
-        return respone;
+        return {
+            isError: false,
+            response: respone,
+            error: undefined,
+        };
     } catch (e) {
-        const cast = e as IBaseException<RP>;
-        throw cast;
+        return {
+            isError: true,
+            response: (e as IBaseException<RP>).response,
+            error: e as IBaseException<RP>,
+        };
     }
 }
 
-async function _DEL<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<IBaseRespone<RP>>> {
+async function _DEL<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>> {
     const { isAuth = false } = params;
     params.baseURL = window.env.API_URL;
     try {
@@ -123,9 +168,16 @@ async function _DEL<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosResponse<I
             method: 'DELETE',
             headers: setHeader(isAuth, params.headers),
         });
-        return respone;
+        return {
+            isError: false,
+            response: respone,
+            error: undefined,
+        };
     } catch (e) {
-        const cast = e as IBaseException<RP>;
-        throw cast;
+        return {
+            isError: true,
+            response: (e as IBaseException<RP>).response,
+            error: e as IBaseException<RP>,
+        };
     }
 }

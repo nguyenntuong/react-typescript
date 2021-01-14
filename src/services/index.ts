@@ -8,7 +8,6 @@ import {
     removeSessionStorage,
 } from './storage';
 
-export { SpawnRequest } from './http';
 export default function injectWindow() {
     setupJSONTransforms();
     window.setStorage = setStorage;
