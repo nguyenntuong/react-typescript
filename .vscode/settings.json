@@ -28,5 +28,7 @@ Happy linting! 💖
     "diffEditor.codeLens": true,
     "diffEditor.ignoreTrimWhitespace": true,
     "files.autoSave": "off",
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "prettier.configPath": ".prettierrc",
+    "prettier.enable": true
 }

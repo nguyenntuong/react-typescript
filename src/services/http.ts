@@ -92,14 +92,14 @@ async function _GET<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>
     const { isAuth = false } = params;
     params.baseURL = window.env.API_URL;
     try {
-        const respone = await axios({
+        const response = await axios({
             ...params,
             method: 'GET',
             headers: setHeader(isAuth, params.headers),
         });
         return {
             isError: false,
-            response: respone,
+            response: response,
             error: undefined,
         };
     } catch (e) {
@@ -115,7 +115,7 @@ async function _PUT<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>
     const { body = {}, isAuth = false, isFormdata = false } = params;
     params.baseURL = window.env.API_URL;
     try {
-        const respone = await axios({
+        const response = await axios({
             ...params,
             method: 'PUT',
             headers: setHeader(isAuth, params.headers),
@@ -123,7 +123,7 @@ async function _PUT<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>
         });
         return {
             isError: false,
-            response: respone,
+            response: response,
             error: undefined,
         };
     } catch (e) {
@@ -139,7 +139,7 @@ async function _POST<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP
     const { body = {}, isAuth = false, isFormdata = false } = params;
     params.baseURL = window.env.API_URL;
     try {
-        const respone = await axios({
+        const response = await axios({
             ...params,
             method: 'POST',
             headers: setHeader(isAuth, params.headers),
@@ -147,7 +147,7 @@ async function _POST<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP
         });
         return {
             isError: false,
-            response: respone,
+            response: response,
             error: undefined,
         };
     } catch (e) {
@@ -163,14 +163,14 @@ async function _DEL<RQ, RP>(params: IRequestParams<RQ>): Promise<AxiosReturn<RP>
     const { isAuth = false } = params;
     params.baseURL = window.env.API_URL;
     try {
-        const respone = await axios({
+        const response = await axios({
             ...params,
             method: 'DELETE',
             headers: setHeader(isAuth, params.headers),
         });
         return {
             isError: false,
-            response: respone,
+            response: response,
             error: undefined,
         };
     } catch (e) {

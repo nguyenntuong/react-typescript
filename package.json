@@ -21,7 +21,7 @@
         "build": "npm run prebuild && react-scripts build",
         "build:analyze": "npm run build && npm run analyze",
         "build:prof": "npm run prebuild && react-scripts build --profile",
-        "start:production": "serve -s build -l 3000",
+        "start:production": "serve -s build -l 8080",
         "start:prod": "npm run build && npm run start:production",
         "start:prod:prof": "npm run build:prof && npm run start:production",
         "test:clean": "rimraf ./coverage",
