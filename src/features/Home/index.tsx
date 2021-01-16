@@ -19,7 +19,7 @@ function Home({
     useEffect(() => {
         setTimeout(() => {
             doAsyncOperator('TUONG ASYNC');
-        }, 2000);
+        }, 1000);
     }, [doAsyncOperator]);
     return <>Home {id}</>;
 }
