@@ -1,4 +1,6 @@
-export interface ILocalState {}
+export interface ILocalState {
+    required: string;
+}
 export interface IGlobalState {
     [key: string]: ILocalState;
 }

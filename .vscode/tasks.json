@@ -10,7 +10,7 @@
         {
             "id": "componentType",
             "type": "pickString",
-            "options": ["component", "container"],
+            "options": ["component", "feature"],
             "default": "component",
             "description": "What type of component do you want to create?"
         },
@@ -34,8 +34,13 @@
                 "clear": true
             },
             "command": ["node"],
-            "args": ["./tools/index.js", "g", "${input:componentType}", "${input:componentName}"],
-            "detail": "Create a template for container or component.",
+            "args": [
+                "./tools/index.js",
+                "g",
+                "${input:componentType}",
+                "${input:componentName}"
+            ],
+            "detail": "Create a template for feature or component.",
             "problemMatcher": [],
             "options": {
                 "cwd": "${cwd}"

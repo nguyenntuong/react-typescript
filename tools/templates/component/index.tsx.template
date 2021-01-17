@@ -1,0 +1,7 @@
+import { composeInferTypeMemo } from 'utils/composeInferType';
+
+export interface I__Component__Props {}
+function __Component__({}: I__Component__Props): React.FunctionComponentElement<I__Component__Props> {
+    return <div>__Component__</div>;
+}
+export default composeInferTypeMemo(__Component__)();

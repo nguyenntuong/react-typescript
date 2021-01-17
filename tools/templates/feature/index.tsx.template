@@ -7,20 +7,20 @@ import reducer from './reducer';
 import saga from './saga';
 import { selectId } from './selectors';
 
-export interface IHomeProps {
+export interface I__Component__Props {
     id: string;
     doAsyncOperator: (newId: string) => void;
 }
-function Home({
+function __Component__({
     id,
     doAsyncOperator,
-}: IHomeProps): React.FunctionComponentElement<IHomeProps> {
+}: I__Component__Props): React.FunctionComponentElement<I__Component__Props> {
     useEffect(() => {
         setTimeout(() => {
-            doAsyncOperator('TUONG ASYNC');
+            doAsyncOperator('__COMPONENT__ ASYNC');
         }, 1000);
     }, [doAsyncOperator]);
-    return <>Home {id}</>;
+    return <>__Component__ {id}</>;
 }
 const mapReducer = connectReducerToProps(
     {
@@ -36,7 +36,7 @@ const mapReducer = connectReducerToProps(
             ),
     }),
 );
-export default composeInferTypeMemo(Home)(
+export default composeInferTypeMemo(__Component__)(
     withReducerSaga(reducer.name, reducer.reducer, saga),
     mapReducer,
 );

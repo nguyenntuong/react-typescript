@@ -1,0 +1,8 @@
+import { shallow } from 'enzyme';
+import __Component__ from '..';
+describe('<__Component__ />', () => {
+    it('Render match snapshot', () => {
+        const com = shallow(<__Component__ />);
+        expect(com.html()).toMatchSnapshot();
+    });
+});

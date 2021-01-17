@@ -26,11 +26,13 @@ module.exports.g = function g(componentType, componentName) {
             `);
             break;
     }
-    console.log(`${componentType} with name ${componentName} was created successfull!`);
+    console.log(
+        `${componentType} with name ${componentName} was created successfull!`,
+    );
 };
 
-const componentsDirPath = 'src/component';
-const containerDirPath = 'src/feature';
+const componentsDirPath = 'src/components';
+const containerDirPath = 'src/features';
 
 const templateComponentPath = 'tools/templates/component';
 const templateContainerPath = 'tools/templates/feature';
@@ -64,20 +66,28 @@ function component(componentName) {
     const dir = `${componentsDirPath}/${componentName}`;
     fs.mkdirSync(dir, {
         recursive: true,
+        mode: 0o777,
     });
     const allTempaltes = getAllTemplate(templateComponentPath);
     for (const template of allTempaltes) {
         const newPath = template.replace(templateComponentPath, dir);
         fs.mkdirSync(newPath.substring(0, newPath.lastIndexOf('/')), {
             recursive: true,
+            mode: 0o777,
         });
         let content = fs.readFileSync(template, {
             encoding: 'utf8',
         });
         content = content
             .replace(/(__Component__)/g, componentName.replace(/ /g, ''))
-            .replace(/(__COMPONENT__)/g, componentName.replace(/ /g, '').toUpperCase());
-        fs.writeFileSync(newPath.replace(templateExtension, ''), content);
+            .replace(
+                /(__COMPONENT__)/g,
+                componentName.replace(/ /g, '').toUpperCase(),
+            );
+        fs.writeFileSync(newPath.replace(templateExtension, ''), content, {
+            mode: 0o777,
+            encoding: 'utf8',
+        });
     }
 }
 /**
@@ -88,19 +98,27 @@ function container(containerName) {
     const dir = `${containerDirPath}/${containerName}`;
     fs.mkdirSync(dir, {
         recursive: true,
+        mode: 0o777,
     });
     const allTempaltes = getAllTemplate(templateContainerPath);
     for (const template of allTempaltes) {
         const newPath = template.replace(templateContainerPath, dir);
         fs.mkdirSync(newPath.substring(0, newPath.lastIndexOf('/')), {
             recursive: true,
+            mode: 0o777,
         });
         let content = fs.readFileSync(template, {
             encoding: 'utf8',
         });
         content = content
             .replace(/(__Component__)/g, containerName.replace(/ /g, ''))
-            .replace(/(__COMPONENT__)/g, containerName.replace(/ /g, '').toUpperCase());
-        fs.writeFileSync(newPath.replace(templateExtension, ''), content);
+            .replace(
+                /(__COMPONENT__)/g,
+                containerName.replace(/ /g, '').toUpperCase(),
+            );
+        fs.writeFileSync(newPath.replace(templateExtension, ''), content, {
+            mode: 0o777,
+            encoding: 'utf8',
+        });
     }
 }
